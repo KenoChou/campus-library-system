@@ -146,8 +146,10 @@ For commercial licensing, customization, or enterprise deployment, please contac
 
 ---
 
-## 📄 License
+## License
 
-Prototype Only · Commercial Use Prohibited
+This repository is released under a custom Prototype License.
 
-Copyright © 2026 Keno Chou
+Commercial use is prohibited.
+
+See the LICENSE file for details.
