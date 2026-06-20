@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>智图学术馆 - 图书管理系统</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#002106",
+                        "primary-container": "#3e90ff",
+                        "on-error": "#690005",
+                        "background": "#131315",
+                        "tertiary": "#47e266",
+                        "on-secondary-fixed": "#0c006b",
+                        "secondary-fixed": "#e2dfff",
+                        "on-surface": "#e4e2e4",
+                        "tertiary-fixed-dim": "#47e266",
+                        "on-surface-variant": "#c0c6d6",
+                        "on-primary-fixed-variant": "#00468d",
+                        "on-primary": "#003064",
+                        "inverse-primary": "#005db8",
+                        "tertiary-container": "#00a73e",
+                        "on-tertiary-container": "#00320d",
+                        "surface-container-highest": "#353437",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#131315",
+                        "surface-container-lowest": "#0e0e10",
+                        "surface": "#131315",
+                        "surface-container-low": "#1b1b1d",
+                        "surface-container-high": "#2a2a2c",
+                        "primary-fixed-dim": "#aac7ff",
+                        "surface-bright": "#39393b",
+                        "surface-variant": "#353437",
+                        "on-primary-container": "#002957",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3e",
+                        "on-background": "#e4e2e4",
+                        "inverse-on-surface": "#303032",
+                        "primary": "#aac7ff",
+                        "outline-variant": "#414754",
+                        "surface-tint": "#aac7ff",
+                        "on-secondary-fixed-variant": "#332dbc",
+                        "tertiary-fixed": "#6cff82",
+                        "outline": "#8b91a0",
+                        "secondary": "#c2c1ff",
+                        "secondary-container": "#3630bf",
+                        "on-secondary": "#1800a7",
+                        "error-container": "#93000a",
+                        "surface-container": "#1f1f21",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-surface": "#e4e2e4",
+                        "on-tertiary": "#003910",
+                        "on-secondary-container": "#b1b1ff",
+                        "secondary-fixed-dim": "#c2c1ff",
+                        "on-tertiary-fixed-variant": "#00531a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #131315;
+            color: #e4e2e4;
+        }
+        .glass-panel {
+            background-color: rgba(27, 27, 29, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background-color: rgba(42, 42, 44, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.2s ease;
+        }
+        .glass-card:hover {
+            background-color: rgba(42, 42, 44, 0.6);
+        }
+        .ghost-outline {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        @keyframes scan {
+            0%, 100% { top: 5%; }
+            50% { top: 95%; }
+        }
+        .animate-scan-line {
+            animation: scan 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+    <div id="root" class="w-full h-full flex"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        const Sidebar = () => {
+            const location = useLocation();
+            
+            const navItems = [
+                { path: '/', icon: 'dashboard', label: '仪表盘' },
+                { path: '/users', icon: 'admin_panel_settings', label: '用户与权限' },
+                { path: '/readers', icon: 'group', label: '读者管理' },
+                { path: '/books', icon: 'auto_stories', label: '图书管理' },
+                { path: '/circulation', icon: 'swap_horiz', label: '借还中心' },
+                { path: '/analytics', icon: 'analytics', label: '逾期与分析' },
+            ];
+
+            return (
+                <nav className="bg-surface-container-low/70 dark:bg-surface-container-low/70 backdrop-blur-2xl h-screen w-72 fixed left-0 top-0 border-r border-white/10 flex flex-col py-xl gap-sm z-50 hidden md:flex">
+                    <div className="px-md mb-lg flex items-center gap-sm">
+                        <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container ghost-border flex-shrink-0 flex items-center justify-center">
+                             <span className="material-symbols-outlined text-primary text-2xl">school</span>
+                        </div>
+                        <div>
+                            <h1 className="font-headline-md text-headline-md text-on-surface tracking-tight">智图学术馆</h1>
+                            <p className="font-label-sm text-label-sm text-on-surface-variant mt-xs">高等教育管理系统</p>
+                        </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-xs px-sm">
+                        {navItems.map((item) => (
+                            <Link 
+                                key={item.path} 
+                                to={item.path}
+                                className={`flex items-center gap-md px-md py-sm rounded-lg font-label-md text-label-md transition-all active:opacity-80 duration-150 ${
+                                    location.pathname === item.path 
+                                    ? 'bg-primary-container/20 text-primary border-r-4 border-primary' 
+                                    : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5'
+                                }`}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontVariationSettings: location.pathname === item.path ? '"FILL" 1' : '"FILL" 0' }}>{item.icon}</span>
+                                {item.label}
+                            </Link>
+                        ))}
+                    </div>
+                    <div className="px-sm mt-auto">
+                        <Link to="/" className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all active:opacity-80 duration-150 font-label-md text-label-md">
+                            <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 0' }}>logout</span>
+                            退出登录
+                        </Link>
+                    </div>
+                </nav>
+            );
+        };
+
+        const Header = ({ title }) => {
+            return (
+                <header className="bg-surface/70 dark:bg-surface/70 backdrop-blur-xl w-full sticky top-0 border-b border-white/10 flex justify-between items-center h-16 px-gutter z-40">
+                    <div className="flex items-center gap-md">
+                        <span className="font-headline-md text-headline-md font-bold text-primary md:hidden">智图学术馆</span>
+                    </div>
+                    
+                    <div className="flex-1 max-w-xl mx-xl hidden sm:block relative group">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span className="material-symbols-outlined text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+                        </div>
+                        <input className="block w-full pl-10 pr-3 py-2 border-transparent rounded-full leading-5 bg-surface-container-high text-on-surface placeholder-on-surface-variant focus:outline-none focus:bg-surface-container focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-all duration-200" placeholder="检索全局学术资源..." type="text" />
+                    </div>
+
+                    <div className="flex items-center gap-md">
+                        <button className="text-on-surface-variant hover:bg-white/5 hover:text-on-surface p-2 rounded-full transition-colors active:scale-95 duration-200 relative">
+                            <span className="material-symbols-outlined">notifications</span>
+                            <span className="absolute top-[6px] right-[6px] w-2 h-2 bg-error rounded-full"></span>
+                        </button>
+                        <button className="text-on-surface-variant hover:bg-white/5 hover:text-on-surface p-2 rounded-full transition-colors active:scale-95 duration-200">
+                            <span className="material-symbols-outlined">settings</span>
+                        </button>
+                        <div className="h-8 w-px bg-white/10 mx-xs"></div>
+                        <button className="flex items-center gap-2 active:scale-95 duration-200 w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center">
+                            <span className="material-symbols-outlined text-sm">person</span>
+                        </button>
+                    </div>
+                </header>
+            );
+        };
+
+        const Dashboard = () => {
+            return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">系统概览</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">实时掌握全馆运营状态与核心数据。</p>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-md">
+                        <div className="glass-card rounded-xl p-md flex flex-col justify-between min-h-[120px] relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity"><span className="material-symbols-outlined text-4xl text-primary">auto_stories</span></div>
+                            <span className="font-label-md text-label-md text-on-surface-variant">图书总数</span>
+                            <div className="font-headline-lg text-headline-lg text-on-surface mt-2 tracking-tight">124,500</div>
+                        </div>
+                         <div className="glass-card rounded-xl p-md flex flex-col justify-between min-h-[120px] relative overflow-hidden group border-error/30 bg-error/5">
+                            <div className="absolute top-0 right-0 p-3 opacity-20 transition-opacity text-error"><span className="material-symbols-outlined text-4xl">warning</span></div>
+                            <span className="font-label-md text-label-md text-on-surface-variant">逾期数量</span>
+                            <div className="font-headline-lg text-headline-lg text-error mt-2 tracking-tight">342</div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Users = () => {
+            return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">用户与权限管理</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">配置系统角色及访问层级。</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+        const Readers = () => {
+             return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">读者管理</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">管理学生与教职工的借阅权限及信息。</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        const Books = () => {
+             return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">图书检索与管理</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">管理馆藏文献，更新状态与库存信息。</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        const Circulation = () => {
+             return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">借阅与归还</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">实时处理读者的图书流通请求。</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        const Analytics = () => {
+             return (
+                <div className="p-gutter lg:p-xl flex-1 flex flex-col gap-lg overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">逾期风险与催还中心</h2>
+                            <p className="font-body-md text-body-md text-on-surface-variant mt-1">当前馆藏超期状态监控。</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Sidebar />
+                    <main className="md:ml-72 flex-1 flex flex-col h-screen overflow-hidden">
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={<Dashboard />} />
+                            <Route path="/users" element={<Users />} />
+                            <Route path="/readers" element={<Readers />} />
+                            <Route path="/books" element={<Books />} />
+                            <Route path="/circulation" element={<Circulation />} />
+                            <Route path="/analytics" element={<Analytics />} />
+                        </Routes>
+                    </main>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
